@@ -1,5 +1,4 @@
 import React from "react";
-import "./index.css";
 
 function renderCell(cell) {
   if (cell.flagged) return "🚩";

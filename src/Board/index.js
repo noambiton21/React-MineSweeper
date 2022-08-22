@@ -1,43 +1,26 @@
 import React from "react";
 import "./index.css";
 import Cell from "../Cell";
-import { useState, useEffect } from "react";
-import {
-  initializeGameBoard,
-  revealCell,
-  flagCell,
-} from "./Helpers/board.helper";
+import { useSelector } from "react-redux";
 
-function Board({ width, height, numOfMines }) {
-  const [gameBoard, setGameBoard] = useState(
-    initializeGameBoard(width, height, numOfMines)
-  );
-
-  const handleCellClick = (event, cell) => {
-    // Check if shift key was held
-    if (event.shiftKey) {
-      flagCell(cell);
-    } else {
-      const lost = revealCell(gameBoard, cell);
-
-      if (lost) {
-        alert("you lose!");
-      }
-    }
-
-    setGameBoard([...gameBoard]);
-  };
+function Board() {
+  const board = useSelector((state) => state.boardReducer.board);
 
   return (
     <div className="board">
-      {gameBoard.map((row, rowIndex) => (
+      {board.map((row, rowIndex) => (
         <div key={rowIndex} className="row">
-          {row.map((col, colIndex) => (
-            <Cell onCellClick={handleCellClick} key={colIndex} cell={col} />
+          {row.map((_, colIndex) => (
+            <Cell
+              key={colIndex + "" + rowIndex}
+              row={rowIndex}
+              column={colIndex}
+            />
           ))}
         </div>
       ))}
     </div>
   );
 }
+
 export default Board;
