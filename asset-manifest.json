@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/React-MineSweeper/static/css/main.db4111fb.css",
+    "main.js": "/React-MineSweeper/static/js/main.b543d048.js",
+    "static/media/flag.png": "/React-MineSweeper/static/media/flag.6c5aa7cd8725dd296e11.png",
+    "static/media/explode.png": "/React-MineSweeper/static/media/explode.a29430dc7bbfa6dce26d.png",
+    "index.html": "/React-MineSweeper/index.html",
+    "main.db4111fb.css.map": "/React-MineSweeper/static/css/main.db4111fb.css.map",
+    "main.b543d048.js.map": "/React-MineSweeper/static/js/main.b543d048.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db4111fb.css",
+    "static/js/main.b543d048.js"
+  ]
+}
