@@ -1,34 +1,66 @@
 import React from "react";
 import "./index.css";
+import mine from "../../assets/images/mine.png";
+import explode from "../../assets/images/explode.png";
+import flag from "../../assets/images/flag.png";
 import { useDispatch, useSelector } from "react-redux";
 import { revealCell, toggleFlag } from "../../actions/board";
 
-function renderCell(cell) {
-  if (cell.flagged) return "🚩";
-  if (!cell.revealed || cell.value === 0) return "";
-  if (cell.value === -1) return "💥";
+function renderCell(cell, superman) {
+  // If the cell is flagged render flag image
+  if (cell.flagged) {
+    return <img width="15" data-test="flag" alt="flag" src={flag} />;
+  }
 
-  return cell.value;
+  // If the cell is not revealed and superman mode is off render nothing
+  if (!superman && !cell.revealed) {
+    return "";
+  }
+
+  // If the cell is a mine and is revealed render boom image,
+  // if the cell is not revealed and superman mode is on render mine image
+  if (cell.value === -1 && (cell.revealed || superman)) {
+    return cell.revealed ? (
+      <img width="20" data-test="explode" src={explode} alt="explode" />
+    ) : (
+      <img width="20" data-test="mine" src={mine} alt="mine" />
+    );
+  }
+
+  return cell.value === 0 ? "" : cell.value;
 }
 
-function Cell({ row, column }) {
-  const cell = useSelector((state) => state.boardReducer.board[row][column]);
-  const dispatch = useDispatch();
-
-  const handleCellClick = (event, cell) => {
+function handleCellClick(event, cell, dispatch) {
+  // Change the flag status if its not revealed
+  if (!cell.revealed || cell.flagged) {
+    // If the shift key was held during the click
     if (event.shiftKey) {
       dispatch(toggleFlag(cell));
     } else {
-      dispatch(revealCell(cell));
+      if (!cell.flagged) dispatch(revealCell(cell));
     }
-  };
+  }
+}
+
+function Cell({ rowIndex, columnIndex, style }) {
+  const cell = useSelector(
+    (state) => state.boardReducer.board[rowIndex][columnIndex]
+  );
+
+  const superman = useSelector((state) => state.boardReducer.superman);
+  const dispatch = useDispatch();
 
   return (
     <div
-      onClick={(event) => handleCellClick(event, cell)}
+      onClick={(event) => handleCellClick(event, cell, dispatch)}
       className={"col " + (cell.revealed ? "revealed" : "")}
+      style={{
+        ...style,
+        border: "1px solid black",
+      }}
+      data-test="cell"
     >
-      {renderCell(cell)}
+      {renderCell(cell, superman)}
     </div>
   );
 }

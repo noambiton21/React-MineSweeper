@@ -2,6 +2,7 @@ import {
   REVEAL_CELL,
   TOGGLE_FLAG,
   START_NEW_GAME,
+  TOGGLE_SUPERMAN,
 } from "../constants/actionType";
 
 export const revealCell = (cell) => {
@@ -30,5 +31,11 @@ export const startNewGame = (width, height, numOfMines) => {
       height,
       numOfMines,
     },
+  };
+};
+
+export const toggleSuperman = (active) => {
+  return {
+    type: TOGGLE_SUPERMAN,
   };
 };
